@@ -1,0 +1,16 @@
+.menu-item{
+    position:absolute;
+}
+.menu-item p{
+    transition:transform 1s;
+    float:left;
+}
+.rot{
+    transform:rotate(90deg);
+}
+.sub-menu{
+    height:0%;
+}
+.rot .sub-menu{
+    height:100%;
+}
