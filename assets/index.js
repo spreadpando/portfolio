@@ -22,6 +22,7 @@ $(document).on('click', '.label', function () {
         nodes = subItems;
         if (context.hasClass('open')) {
             $('.level1').remove();
+            nodes = ['one'];
         } else {
             for (let i = 0; i < subItems.length; i++) {
                 setTimeout(function () { addItem(subItems[i], 1, i, 'nav') }, i * 100);
@@ -66,14 +67,27 @@ $(document).on('click', '.label', function () {
     }
 
     context.toggleClass('open');
+
+    var constellation = new THREE.Geometry();
     for (let i = 0; i < nodes.length; i++) {
-        var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        var cube = new THREE.Mesh(geometry, material);
-        cube.position.x = Math.random() * 10;
-        cube.position.y = Math.random() * 10;
-        cube.position.z = Math.random() * 10;
+        var cube = new THREE.Vector3();
+        if (i > 0) {
+            cube.x = Math.random() * 10;
+            cube.y = Math.random() * 10;
+            cube.z = Math.random() * 10;
+        }
+        constellation.vertices.push(cube);
         scene.add(cube);
     }
+    var lineMaterial = new THREE.LineBasicMaterial({
+        color: 0x000000,
+        depthTest: true,
+        opacity: 1,
+        transparent: true
+    });
+    var line = new THREE.LineLoop(constellation, lineMaterial);
+    scene.add(line);
+
 })
 
 
@@ -85,15 +99,10 @@ var renderer = new THREE.WebGLRenderer({ alpha: true });
 renderer.setSize(document.getElementById('wrap-body').offsetWidth, document.getElementById('wrap-body').offsetHeight);
 $('#wrap-body').append(renderer.domElement);
 
-var geometry = new THREE.BoxGeometry(1, 1, 1);
-
-
 camera.position.z = 25;
 
 var animate = function () {
     requestAnimationFrame(animate);
-
-
 
     renderer.render(scene, camera);
 };
