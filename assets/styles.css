@@ -29,7 +29,10 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
-	line-height: 1;
+    line-height: 1;
+    background-color:rgb(46, 46, 46);
+    width:97vw;
+    height:95vh;
 }
 ol, ul {
 	list-style: none;
@@ -51,7 +54,6 @@ canvas{
     top:0;
     left:0;
     z-index: -10000;
-
 }
 
 #wrap-body{
@@ -74,12 +76,14 @@ canvas{
 .menu-item p{
     transition:transform 0.5s;
     float:left;
+    color:#ffffff;
 
 }
 .rot{
     transform:rotate(90deg);
 }
 #line{
+    color:#ffffff;
     font-weight:400;
     font-size:110%;
 }
