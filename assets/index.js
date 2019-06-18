@@ -9,6 +9,15 @@ function addItem(labelHTML, level, index, target) {
 
 addItem('pando', 0, 0, 'nav');
 
+let repoLinks = [];
+let repos = [];
+$.get('https://api.github.com/users/spreadpando/repos', function (result, status) {
+    for (let i in result) {
+        repoLinks.push('https://github.com/spreadpando/' + result[i].name);
+        repos.push(result[i].name)
+    }
+})
+
 $(document).on('click', '.label', function () {
     while (scene.children.length > 0) {
         scene.remove(scene.children[0]);
@@ -16,7 +25,8 @@ $(document).on('click', '.label', function () {
     var nodes = [];
     let subItems0 = ["about", "portfolio", "contact"];
     let subItems1 = ["development", "design", "marketing"];
-    let subItems2 = ["repo", "repo", "repo", "repo", "repo"];
+    let subItems2 = repos;
+    let subLinks2 = repoLinks;
     let subItems3 = ["social", "contact form"];
 
     let context = $(this).parent();
@@ -54,7 +64,7 @@ $(document).on('click', '.label', function () {
             } else {
                 nodes = subItems2;
                 for (let i = 0; i < subItems2.length; i++) {
-                    setTimeout(function () { addItem(subItems2[i], 3, i, context) }, i * 100);
+                    setTimeout(function () { addItem('<a href = ' + subLinks2[i] + '>' + subItems2[i] + '</a>', 3, i, context) }, i * 100);
                 }
             }
         }
@@ -127,12 +137,8 @@ function render(nodes) {
         banners.add(banner);
     }
     group.add(banners);
-    var lineMaterial = new THREE.LineDashedMaterial({
-        vertexColors: false,
-        color: 0xffffff,
-        dashSize: .1,
-        gapSize: .2,
-        scale: 1,
+    var lineMaterial = new THREE.LineBasicMaterial({
+        color: 0x000000,
     });
 
     var line = new THREE.LineLoop(starsGeometry, lineMaterial);

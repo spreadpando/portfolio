@@ -55,6 +55,10 @@ canvas{
     left:0;
     z-index: -10000;
 }
+a{
+    color:white;
+    text-decoration:none;
+}
 
 #wrap-body{
     position:absolute;
